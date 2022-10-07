@@ -9,16 +9,44 @@ void main() {
   //   final UserModell userList = await network.getData();
   // })
   test('testing the data recieved from the rest api', () async {
-    //setup
-
-    //do
-
     List<dynamic> testList = [
-      {'id': 1, 'name': 'rehan'}
+      {'id': 1, 'name': 'rehan'},
+      {'id': 2, 'name': 'rizwan'},
+      {'id': 3, 'name': 'imran'},
     ];
 
     expect(await network.getDataList(), testList);
   });
+
+  //
+  // test('testing the data recieved from the rest api getUserDataNew', () async {
+  //
+  //   List<dynamic> testList = [
+  //     {'id': 1, 'name': 'rehan'},
+  //     {'id': 2, 'name': 'rizwan'},
+  //     {'id': 3, 'name': 'imran'},
+  //     {'id': 4, 'name': 'adnan'},
+  //     {'id': 5, 'name': 'sharoz'},    ];
+  //
+  //   expect(await network.getUserDataNew(), testList);
+  // });
+
+  test('testing the data recieved from the rest api getUserDataNeww', () async {
+    List<dynamic> testList = [
+      {'id': 1, 'name': 'rehan'},
+      {'id': 2, 'name': 'rizwan'},
+      {'id': 3, 'name': 'imran'},
+    ];
+
+    expect(await network.getUserDataNeww(), testList);
+  });
+
+  // test('testing the data deleted from the rest api deleteUser', () async {
+  //
+  // var test =await network.deleteUser(1);
+  //
+  //   expect(network.length, 4);
+  // });
 }
 
 // network.getData();

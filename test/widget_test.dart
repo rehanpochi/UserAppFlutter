@@ -1,30 +1,57 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:todo_app/home.dart';
 import 'package:todo_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Material App testing', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const Home());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(MaterialApp),findsOneWidget);
   });
+
+  testWidgets('Testing App bar ', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.byType(AppBar),findsOneWidget);
+  });
+
+  testWidgets('Testing App bar text', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.text('User App'),findsOneWidget);
+  });
+
+  testWidgets('Testing Expanded Widget where out user data is rendered', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.byType(Expanded),findsNWidgets(1));
+  });
+
+  testWidgets('Testing Future Builder to build the data recieving from the Rest Api', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.byType(FutureBuilder),findsNWidgets(1));
+  });
+
+  testWidgets('Testing Row Widget where our Floating action button are placed', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.byType(Row),findsNWidgets(1));
+  });
+
+
+  testWidgets('Testing 2 FLoating Action Buttons', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(MaterialApp(home :const Home(),
+    ));
+    expect(find.byType(FloatingActionButton),findsNWidgets(2));
+  });
+
 }

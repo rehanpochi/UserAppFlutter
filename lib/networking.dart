@@ -9,6 +9,10 @@ import 'dart:convert';
 
 class Networking {
 
+  int length=0;
+  List<UserData> userss = [];
+
+
   Future<UserModell> createUser(int id, String name) async {
     // final String apiUrl='http://192.168.0.100:8090/todoAddd';
     String stringId = id.toString();
@@ -30,16 +34,20 @@ class Networking {
   Future<UserModell> deleteUser(int? id) async {
     // final String apiUrl='http://192.168.0.100:8090/todoAddd';
     var uri = Uri.parse('http://192.168.0.104:8080/user/$id');
-    //final response = await http.delete(uri, body: {"name": name});
-    final response = await http.delete(uri);
-    // final response =await http.post(apiUrl,body:{"name":name});
-    print(response);
-    print(response.body);
-    final String responseString = response.body;
-    print(response.statusCode);
-    // print(responseString);
-    // print(userModelFromJson(responseString));
-    return userModelFromJson(responseString);
+      //final response = await http.delete(uri, body: {"name": name});
+      final response = await http.delete(uri);
+      // final response =await http.post(apiUrl,body:{"name":name});
+
+
+      print(response);
+      print(response.body);
+      final String responseString = response.body;
+      print(response.statusCode);
+      // print(responseString);
+      // print(userModelFromJson(responseString));
+      return userModelFromJson(responseString);
+      //return responseString;
+
   }
 
   Future getData() async {
@@ -87,4 +95,51 @@ class Networking {
     //return responseString;
   }
 
+  Future getUserDataNew() async {
+    var uri = Uri.http('192.168.0.104:8080', 'user');
+    var response = await http.get(uri);
+    var jsonData = jsonDecode(response.body);
+    List<UserData> userss = [];
+
+    for (var u in jsonData) {
+      UserData userr = UserData(u["id"], u["name"]);
+      userss.add(userr);
+    }
+    length=userss.length;
+    print(userss.length);
+    return userss;
+  }
+
+  Future getUserDataNeww() async {
+    var uri = Uri.http('192.168.0.104:8080', 'user');
+    var response = await http.get(uri);
+    var jsonData = jsonDecode(response.body);
+   // List<UserData> userss = [];
+    return jsonData;
+  }
+
+
+
+  Future createUserNew(int id, String name) async {
+    // final String apiUrl='http://192.168.0.100:8090/todoAddd';
+    String stringId = id.toString();
+    var uri = Uri.parse('http://192.168.0.104:8080/user');
+    var response = await http.post(uri, body: {
+      "id": stringId,
+      "name": name,
+    });
+    var jsonData=jsonDecode(response.body);
+    UserData userr = UserData(jsonData["id"], jsonData["name"]);
+    userss.add(userr);
+
+    return jsonData;
+  }
+
+}
+
+class UserData {
+  final int id;
+  final String name;
+
+  UserData(this.id, this.name);
 }
