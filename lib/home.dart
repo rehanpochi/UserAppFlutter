@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'User App'),
+      home: const MyHomePage(title: 'JSON Path Finder'),
     );
   }
 }
@@ -35,14 +35,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  UserModell _user1 = new UserModell(name: "User 1");
-  UserData _userData=new UserData(1, "aaa");
-  // List<UserData> userss = [];
 
-
-  // UserModell _user2 = new UserModell(name: "User 2");
-  // UserModell _user3 = new UserModell(name: "User 3");
-  UserModelList _userList = new UserModelList(name: "xyz", id: 2);
   Networking network = new Networking();
 
   final TextEditingController nameController = TextEditingController();
@@ -76,54 +69,47 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 //Text("The user ${userName} is created succesfully."),
                 SizedBox(
-                  height: 15,
+                  height: 100,
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: Card(
-              child: FutureBuilder(
-                future: network.getUserDataNew(),
-                builder: (context, snapshot) {
-                  if (snapshot.data == null) {
-                    return Container(
-                      child: Center(
-                        child: Text("Loading"),
-                      ),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, i) {
-                        return ListTile(
-                          title: Text(snapshot.data[i].name),
-                          leading: Text(snapshot.data[i].id.toString()),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
-          ),
-          Row(
+          // Expanded(
+          //   child: Card(
+          //     child: FutureBuilder(
+          //       future: network.getUserDataNew(),
+          //       builder: (context, snapshot) {
+          //         if (snapshot.data == null) {
+          //           return Container(
+          //             child: Center(
+          //               child: Text("Loading"),
+          //             ),
+          //           );
+          //         } else {
+          //           return ListView.builder(
+          //             itemCount: snapshot.data.length,
+          //             itemBuilder: (context, i) {
+          //               return ListTile(
+          //                 title: Text(snapshot.data[i].name),
+          //                 leading: Text(snapshot.data[i].id.toString()),
+          //               );
+          //             },
+          //           );
+          //         }
+          //       },
+          //     ),
+          //   ),
+          // ),
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              FloatingActionButton(
+              ElevatedButton(
                 onPressed: () async {
-                  final String name = nameController.text;
-                  int controllerIdText = int.parse(idController.text);
-                  final UserModell user =
-                      await network.createUser(controllerIdText, name);
-                  setState(() {
-                    _user1 = user;
-                    userName = user.name;
-                  });
+                  var user = await network.createUserxyz();
                 },
-                child: const Icon(Icons.add),
+                child: Text('Add Json')
               ),
-
+              SizedBox(height: 50),
               // ElevatedButton(
               //     onPressed: () async {
               //       // getData();
@@ -137,21 +123,20 @@ class _MyHomePageState extends State<MyHomePage> {
               //       // });
               //     },
               //     child: Text("Press me to get data")),
-              FloatingActionButton(
+              ElevatedButton(
                 onPressed: () async {
-                  final String name = nameController.text;
-                  int controllerIdText = int.parse(idController.text);
-                  network.deleteUser(controllerIdText);
-                  setState(() {
-                    _user1.id = null;
-                    _user1.name = "";
-                    nameController.text = "";
-                    idController.text = "";
-                  });
-                  //onDeleteItem(todo.id);
+                  var StringData = await network.loadAsset();
                 },
-                child: const Icon(Icons.delete),
+                child: Text('Common path'),
               ),
+              SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () async {
+                  var user = await network.createUserabc();
+                },
+                child: Text('All paths')
+              ),
+
             ],
           ),
         ],
